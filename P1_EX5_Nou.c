@@ -203,6 +203,18 @@ void inicialitzarArray(especie *a){
 	}
 }
 
+void mostraDades(especie *e, int n_especies){
+	int i;
+
+	if(n_especies > 1){
+		for(i = 0; i < n_especies; i++){
+			printf("-->Especie: %s\nExemplars: %d")
+		}
+	}else{
+		printf("No hi ha especies");
+	}
+}
+
 void main() {
   int opcio, n_especies = 0, index = 0;
   char entrada[MAX_INPUT];
@@ -251,6 +263,7 @@ void main() {
 
       } else if(opcio == 2){
         //Opció 2
+				mostraDades(especies_zoo);
       } else if(opcio == 3){
         //Opcio 3
       } else if(opcio == 4){
