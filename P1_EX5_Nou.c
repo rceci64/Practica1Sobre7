@@ -208,11 +208,15 @@ void mostraDades(especie *e, int n_especies){
 
 	if(n_especies > 1){
 		for(i = 0; i < n_especies; i++){
-			printf("-->Especie: %s\nExemplars: %d")
+			printf("-->Especie: %s\nExemplars: %d\nData entrada: %s\nSeccio: %c\nHabitacle: %d\n\n", (*especie).nom, (*especie).exemplars, (*especie).data, (*especie).seccio, (*especie).habitacle);
 		}
 	}else{
 		printf("No hi ha especies");
 	}
+}
+
+void mostraEstadistiques(){
+
 }
 
 void main() {
@@ -266,6 +270,7 @@ void main() {
 				mostraDades(especies_zoo);
       } else if(opcio == 3){
         //Opcio 3
+				mostraEstadistiques(estadistiques_zoo);
       } else if(opcio == 4){
         printf("--> Sortint de la base de dades...\n" );
       }
