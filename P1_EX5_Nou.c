@@ -144,6 +144,7 @@ void actualitzarDades(char *entrada, especie *especies, int index){
 	i++;
 	j++;
 	aux[j] = '\0';
+	printf("\n%s", aux);
 	especies[index].exemplars = especies[index].exemplars + atoi(aux);
 
 	//Actualitzar la data
@@ -197,7 +198,6 @@ int comprovarExistent(char *entrada, especie *especies, int *index){
 void inicialitzarArray(especie *a){
 	int i = 0;
 	while (i < MAX_ESPECIES){
-		a[i].nom[0] = '\0';
 		a[i].exemplars = 0;
 		i++;
 	}
@@ -206,9 +206,9 @@ void inicialitzarArray(especie *a){
 void mostraDades(especie *e, int n_especies){
 	int i;
 
-	if(n_especies > 1){
+	if(n_especies >= 1){
 		for(i = 0; i < n_especies; i++){
-			printf("-->Especie: %s\nExemplars: %d\nData entrada: %s\nSeccio: %c\nHabitacle: %d\n\n", (*especie).nom, (*especie).exemplars, (*especie).data, (*especie).seccio, (*especie).habitacle);
+			printf("-->Especie: %s\nExemplars: %d\nData entrada: %s\nSeccio: %c\nHabitacle: %d\n\n", e[i].nom, e[i].exemplars, e[i].data, e[i].seccio, e[i].habitacle);
 		}
 	}else{
 		printf("No hi ha especies");
@@ -223,7 +223,7 @@ void main() {
   int opcio, n_especies = 0, index = 0;
   char entrada[MAX_INPUT];
   especie especies_zoo[MAX_ESPECIES];
-	//inicialitzarArray(especies_zoo);
+	inicialitzarArray(especies_zoo);
 
   while (opcio != 4){
     printf("\nPrototipus de la reserva natural");
@@ -239,6 +239,7 @@ void main() {
 				printf("Introdueix una nova especie: ");
 				fflushnou();
 				gets(entrada);
+				entrada[strlen(entrada)-1] = '\0';
 				index = 0;
 				if(comprovarDades(entrada)){
 					//Comprovar si ja hi ha aquesta espècie, si és així sumar exemplars i actualitzar camps
@@ -267,10 +268,10 @@ void main() {
 
       } else if(opcio == 2){
         //Opció 2
-				mostraDades(especies_zoo);
+				mostraDades(especies_zoo, n_especies);
       } else if(opcio == 3){
         //Opcio 3
-				mostraEstadistiques(estadistiques_zoo);
+				//mostraEstadistiques(estadistiques_zoo);
       } else if(opcio == 4){
         printf("--> Sortint de la base de dades...\n" );
       }
