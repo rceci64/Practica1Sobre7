@@ -132,8 +132,9 @@ void actualitzarDades(char *entrada, especie *especies, int index){
 		especies[index].nom[i] = entrada[i];
 		i++;
 	}
-	i++;
+	//i++;
 	especies[index].nom[i] = '\0';
+	i++;
 
 	//Sumar exemplars
 	while (entrada[i] != '-'){
@@ -142,7 +143,7 @@ void actualitzarDades(char *entrada, especie *especies, int index){
 		j++;
 	}
 	i++;
-	j++;
+	//j++;
 	aux[j] = '\0';
 	especies[index].exemplars = especies[index].exemplars + atoi(aux);
 
@@ -154,7 +155,7 @@ void actualitzarDades(char *entrada, especie *especies, int index){
 		j++;
 	}
 	i++;
-	j++;
+	//j++;
 	especies[index].data[j] = '\0';
 
 	//Actualitzar seccio
@@ -169,7 +170,7 @@ void actualitzarDades(char *entrada, especie *especies, int index){
 		i++;
 		j++;
 	}
-	j++;
+	//j++;
 	aux[j] = '\0';
 
 	especies[index].habitacle = atoi(aux);
