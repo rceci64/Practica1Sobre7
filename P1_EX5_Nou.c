@@ -8,14 +8,26 @@
 #define MAX_INPUT 140
 
 typedef struct{
+	int dia;
+	int mes;
+	int any;
+}Data;
+
+typedef struct{
+	int numE;
+	char seccio;
+}Seccions;
+
+typedef struct{
 			char nom[MAX_NOM];
 			int exemplars;
+			Data dataI;
 			char data[11];
 			char seccio;
 			int habitacle;
 }especie;
 
-int comprovarData (char *dat){
+int comprovarData (char *dat, Data *dataI){
 	int i = 0, j = 0, dia = 0, mes = 0, any = 0;
 	char aux[5];
 
@@ -66,6 +78,9 @@ int comprovarData (char *dat){
 		}
 	}
 
+	(*dataI).dia = dia;
+	(*dataI).mes = mes;
+	(*dataI).any = any;
 	return 1;
 }
 
@@ -208,14 +223,63 @@ void mostraDades(especie *e, int n_especies){
 	}
 }
 
-void mostraEstadistiques(){
+void mostraEstadistiques(especie *e, int n_especies){
+	int i, j, trobat, especieMesExemplars = 0, especieMenysExemplars = 0, seccioMesExemplars = 0, especieMesAntiga = 0, n_seccions = 0;
+	Seccions seccions[MAX_ESPECIES];
 
+	if(n_especies >= 1){
+		printf("-->Quantitat d'especies: %d\n", n_especies);
+		for(i = 0; i < n_especies; i++){
+			if(e[i].exemplars > e[especieMesExemplars].exemplars){
+				especieMesExemplars = i;
+			}
+			if(e[i].exemplars < e[especieMenysExemplars].exemplars){
+				especieMenysExemplars = i;
+			}
+			if(e[i].dataI.any < e[especieMesAntiga].any){
+				especieMesAntiga = i;
+			}else if(e[i].dataI.any == e[especieMesAntiga].any){
+				if(e[i].dataI.mes < e[especieMesAntiga].mes){
+					especieMesAntiga = i;
+				}else if(e[i].dataI.mes == e[especieMesAntiga].mes){
+					if(e[i].dataI.dia < e[especieMesAntiga].dia){
+						especieMesAntiga = i;
+					}
+				}
+			}
+			trobat = 0;
+			for(j = 0; j < n_especies && !trobat; j++){
+				if(e[i].seccio == seccions[j].seccio){
+					seccions[j].numE = seccions[j].numE + especie[i].seccio;
+					trobat = 1;
+				}
+			}
+			if(!trobat){
+				seccions[n_seccions].seccio = e[i].seccio;
+				seccions[n_seccions].numE = e[i].exemplars;
+				n_seccions++;
+			}
+		}
+		for(i = 0; i < n_especies; i++){
+			if(seccions[i].numE > seccions[seccioMesExemplars].numE){
+				seccioMesExemplars = i;
+			}
+		}
+
+		printf("-->Especie amb mes exemplars: %s (%d)\n", e[especieMesExemplars].nom, e[especieMesExemplars].exemplars);
+		printf("-->Especie amb menys exemplars: %s (%d)\n", e[especieMenysExemplars].nom, e[especieMenysExemplars].exemplars);
+		printf("-->Seccio amb mes exemplars: Seccio %c (%d)\n", seccions[seccioMesExemplars].seccio, seccions[seccioMesExemplars].numE);
+		printf("-->Especie mes antiga: %s (%s)\n", e[especieMesAntiga].nom, e[especieMesAntiga].data);
+	}else{
+		printf("-->Quantitat d'especies: 0\n-->Especie amb mes exemplars: Cap\n-->Especie amb menys exemplars: Cap\n-->Seccio amb mes exemplars: Cap\n-->Especie mes antiga: Cap\n");
+	}
 }
 
 void main() {
   int opcio, n_especies = 0, index = 0, i;
   char entrada[MAX_INPUT];
   especie especies_zoo[MAX_ESPECIES];
+	Data comprovarDataI;
 	for (i = 0; i < MAX_ESPECIES; i++){ //Incialitza els exemplars de l'array a 0
 		especies_zoo[i].exemplars = 0;
 	}
@@ -236,7 +300,8 @@ void main() {
 				gets(entrada);
 				//entrada[strlen(entrada)-1] = '\0';
 				index = 0;
-				if(comprovarDades(entrada)){
+				if(comprovarDades(entrada, &comprovarDataI )){
+					especies_zoo[index].dataI = comprovarDataI;
 					//Comprovar si ja hi ha aquesta espècie, si és així sumar exemplars i actualitzar camps
 					if(comprovarExistent(entrada, especies_zoo, &index)){
 						printf("--> Especie ja existent! Actualitzant les dades...\n");
@@ -266,7 +331,7 @@ void main() {
 				mostraDades(especies_zoo, n_especies);
       } else if(opcio == 3){
         //Opcio 3
-				//mostraEstadistiques(estadistiques_zoo);
+				//mostraEstadistiques(estadistiques_zoo, n_especies);
       } else if(opcio == 4){
         printf("--> Sortint de la base de dades...\n" );
       }
