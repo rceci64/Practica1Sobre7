@@ -184,7 +184,7 @@ int comprovarExistent(char *entrada, especie *especies, int *index){
 		aux[i] = entrada[i];
 		i++;
 	}
-	i++;
+	//i++;
 	aux[i] = '\0';
 
 	while (*index < MAX_ESPECIES){
