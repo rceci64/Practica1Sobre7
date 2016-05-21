@@ -84,7 +84,7 @@ int comprovarData (char *dat, Data *dataI){
 	return 1;
 }
 
-int comprovarDades (char *cad){
+int comprovarDades (char *cad, Data *dataI){
 	int i = 0, j = 0;
 	char data_aux[11];
 
@@ -107,7 +107,7 @@ int comprovarDades (char *cad){
 			j++;
 		}
 		data_aux[j+1] = '\0';
-		if(!comprovarData(data_aux)){
+		if(!comprovarData(data_aux, dataI)){
 			return 0;
 		}
 		i++;
@@ -236,13 +236,13 @@ void mostraEstadistiques(especie *e, int n_especies){
 			if(e[i].exemplars < e[especieMenysExemplars].exemplars){
 				especieMenysExemplars = i;
 			}
-			if(e[i].dataI.any < e[especieMesAntiga].any){
+			if(e[i].dataI.any < e[especieMesAntiga].dataI.any){
 				especieMesAntiga = i;
-			}else if(e[i].dataI.any == e[especieMesAntiga].any){
-				if(e[i].dataI.mes < e[especieMesAntiga].mes){
+			}else if(e[i].dataI.any == e[especieMesAntiga].dataI.any){
+				if(e[i].dataI.mes < e[especieMesAntiga].dataI.mes){
 					especieMesAntiga = i;
-				}else if(e[i].dataI.mes == e[especieMesAntiga].mes){
-					if(e[i].dataI.dia < e[especieMesAntiga].dia){
+				}else if(e[i].dataI.mes == e[especieMesAntiga].dataI.mes){
+					if(e[i].dataI.dia < e[especieMesAntiga].dataI.dia){
 						especieMesAntiga = i;
 					}
 				}
@@ -250,7 +250,7 @@ void mostraEstadistiques(especie *e, int n_especies){
 			trobat = 0;
 			for(j = 0; j < n_especies && !trobat; j++){
 				if(e[i].seccio == seccions[j].seccio){
-					seccions[j].numE = seccions[j].numE + especie[i].seccio;
+					seccions[j].numE = seccions[j].numE + e[i].seccio;
 					trobat = 1;
 				}
 			}
