@@ -264,6 +264,8 @@ void mostraEstadistiques(especie *e, int n_especies){
 	int i, j, trobat, especieMesExemplars = 0, especieMenysExemplars = 0, seccioMesExemplars = 0, especieMesAntiga = 0, n_seccions = 0;
 	Seccions seccions[MAX_ESPECIES];
 
+	//printf("Test\n");
+
 	if(n_especies >= 1){
 		printf("-->Quantitat d'especies: %d\n", n_especies);
 		//for(i = 0; i < n_especies; i++){
@@ -371,7 +373,11 @@ void main() {
 				mostraDades(especies_zoo, n_especies);
       } else if(opcio == 3){
         //Opcio 3
+<<<<<<< HEAD
 				mostraEstadistiques(estadistiques_zoo, n_especies);
+=======
+		mostraEstadistiques(especies_zoo, n_especies);
+>>>>>>> origin/master
       } else if(opcio == 4){
         printf("--> Sortint de la base de dades...\n" );
       }
