@@ -298,7 +298,7 @@ void mostraEstadistiques(especie *e, int n_especies){
 				n_seccions++;
 			}
 		}
-		for(i = 0; i < n_especies; i++){
+		for(i = 0; i < n_seccions; i++){
 			if(seccions[i].numE > seccions[seccioMesExemplars].numE){
 				seccioMesExemplars = i;
 			}
