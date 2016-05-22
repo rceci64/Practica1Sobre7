@@ -370,14 +370,10 @@ void main() {
 
       } else if(opcio == 2){
         //Opció 2
-				mostraDades(especies_zoo, n_especies);
+		mostraDades(especies_zoo, n_especies);
       } else if(opcio == 3){
         //Opcio 3
-<<<<<<< HEAD
-				mostraEstadistiques(estadistiques_zoo, n_especies);
-=======
 		mostraEstadistiques(especies_zoo, n_especies);
->>>>>>> origin/master
       } else if(opcio == 4){
         printf("--> Sortint de la base de dades...\n" );
       }
