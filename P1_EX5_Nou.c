@@ -264,13 +264,8 @@ void mostraEstadistiques(especie *e, int n_especies){
 	int i, j, trobat, especieMesExemplars = 0, especieMenysExemplars = 0, seccioMesExemplars = 0, especieMesAntiga = 0, n_seccions = 0;
 	Seccions seccions[MAX_ESPECIES];
 
-	//printf("Test\n");
-
 	if(n_especies >= 1){
 		printf("-->Quantitat d'especies: %d\n", n_especies);
-		//for(i = 0; i < n_especies; i++){
-		//	e[i].dataI = obtenirData(e[i].data);
-		//}
 		for(i = 0; i < n_especies; i++){
 			e[i].dataI = obtenirData(e[i].data);
 			if(e[i].exemplars > e[especieMesExemplars].exemplars){
@@ -293,7 +288,7 @@ void mostraEstadistiques(especie *e, int n_especies){
 			trobat = 0;
 			for(j = 0; j < n_especies && !trobat; j++){
 				if(e[i].seccio == seccions[j].seccio){
-					seccions[j].numE = seccions[j].numE + e[i].seccio;
+					seccions[j].numE = seccions[j].numE + e[i].exemplars;
 					trobat = 1;
 				}
 			}
