@@ -27,7 +27,47 @@ typedef struct{
 			int habitacle;
 }especie;
 
-int comprovarData (char *dat, Data *dataI){
+Data obtenirData(char *dat){
+	int i = 0, j = 0;
+	char aux[5];
+	Data dataAux;
+
+	while (dat[i] != '/'){
+		aux[j] = dat[i];
+		i++;
+		j++;
+	}
+	i++;
+	j++;
+	aux[j] = '\0';
+	dataAux.dia = atoi(aux);
+
+	j = 0;
+	while (dat[i] != '/'){
+		aux[j] = dat[i];
+		j++;
+		i++;
+	}
+	i++;
+	j++;
+	aux[j] = '\0';
+	dataAux.mes = atoi(aux);
+
+	j = 0;
+	while (dat[i] != '\0'){
+		aux[j] = dat[i];
+		j++;
+		i++;
+	}
+	i++;
+	j++;
+	aux[j] = '\0';
+	dataAux.any = atoi(aux);
+
+	return dataAux;
+}
+
+int comprovarData (char *dat){
 	int i = 0, j = 0, dia = 0, mes = 0, any = 0;
 	char aux[5];
 
@@ -78,13 +118,10 @@ int comprovarData (char *dat, Data *dataI){
 		}
 	}
 
-	(*dataI).dia = dia;
-	(*dataI).mes = mes;
-	(*dataI).any = any;
 	return 1;
 }
 
-int comprovarDades (char *cad, Data *dataI){
+int comprovarDades (char *cad){
 	int i = 0, j = 0;
 	char data_aux[11];
 
@@ -107,7 +144,7 @@ int comprovarDades (char *cad, Data *dataI){
 			j++;
 		}
 		data_aux[j+1] = '\0';
-		if(!comprovarData(data_aux, dataI)){
+		if(!comprovarData(data_aux)){
 			return 0;
 		}
 		i++;
@@ -229,7 +266,11 @@ void mostraEstadistiques(especie *e, int n_especies){
 
 	if(n_especies >= 1){
 		printf("-->Quantitat d'especies: %d\n", n_especies);
+		//for(i = 0; i < n_especies; i++){
+		//	e[i].dataI = obtenirData(e[i].data);
+		//}
 		for(i = 0; i < n_especies; i++){
+			e[i].dataI = obtenirData(e[i].data);
 			if(e[i].exemplars > e[especieMesExemplars].exemplars){
 				especieMesExemplars = i;
 			}
@@ -300,8 +341,7 @@ void main() {
 				gets(entrada);
 				//entrada[strlen(entrada)-1] = '\0';
 				index = 0;
-				if(comprovarDades(entrada, &comprovarDataI )){
-					especies_zoo[index].dataI = comprovarDataI;
+				if(comprovarDades(entrada)){
 					//Comprovar si ja hi ha aquesta espècie, si és així sumar exemplars i actualitzar camps
 					if(comprovarExistent(entrada, especies_zoo, &index)){
 						printf("--> Especie ja existent! Actualitzant les dades...\n");
@@ -331,7 +371,7 @@ void main() {
 				mostraDades(especies_zoo, n_especies);
       } else if(opcio == 3){
         //Opcio 3
-				//mostraEstadistiques(estadistiques_zoo, n_especies);
+				mostraEstadistiques(estadistiques_zoo, n_especies);
       } else if(opcio == 4){
         printf("--> Sortint de la base de dades...\n" );
       }
