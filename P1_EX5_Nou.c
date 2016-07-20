@@ -313,6 +313,42 @@ void mostraEstadistiques(especie *e, int n_especies){
 	}
 }
 
+int comprovarHabSec(entrada, especies_zoo){
+	int i = 0, j = 0, hab = 0, ok = 1;
+	char cosa, seccio;
+	char enter[10];
+
+
+	cosa = entrada[i];
+	while(j < 3){
+		while(cosa != '-'){
+			i++;
+			cosa = entrada[i];
+		}
+		j++;
+	}
+	seccio = entrada[i];
+	i = i + 2;
+	j = 0;
+
+	while(entrada[i] != '\0'){
+		enter[j] = entrada[i];
+		j++;
+		i++;
+	}
+	hab = atoi(enter);
+
+	i = 0;
+	while(ok && i < 10){
+		if(especies_zoo[i].habitacle == hab && especies_zoo[i].seccio == seccio){
+			ok = !ok;
+		}
+		i++;
+	}
+
+	return ok;
+}
+
 void main() {
   int opcio, n_especies = 0, index = 0, i;
   char entrada[MAX_INPUT];
@@ -348,15 +384,18 @@ void main() {
 						if(n_especies >= MAX_ESPECIES){
 							printf("--> Base de dades plena!");
 						}else{
-							//Si no existeix augmentem n_especies en 1 i actualitzem la base de dades
-							actualitzarDades(entrada, especies_zoo, n_especies);
-							printf ("%s\n", especies_zoo[n_especies].nom);
-							printf ("%d\n", especies_zoo[n_especies].exemplars);
-							printf ("%s\n", especies_zoo[n_especies].data);
-							printf ("%c\n", especies_zoo[n_especies].seccio);
-							printf ("%d\n", especies_zoo[n_especies].habitacle);
-							n_especies++;
-							printf("--> Especie afegida correctament! [%d/10] espais ocupats", n_especies);
+							//Comprovar que l'habitacle i secció no està ocupat
+							if(comprovarHabSec(entrada, especies_zoo)){
+								//Si no existeix augmentem n_especies en 1 i actualitzem la base de dades
+								actualitzarDades(entrada, especies_zoo, n_especies);
+								printf ("%s\n", especies_zoo[n_especies].nom);
+								printf ("%d\n", especies_zoo[n_especies].exemplars);
+								printf ("%s\n", especies_zoo[n_especies].data);
+								printf ("%c\n", especies_zoo[n_especies].seccio);
+								printf ("%d\n", especies_zoo[n_especies].habitacle);
+								n_especies++;
+								printf("--> Especie afegida correctament! [%d/10] espais ocupats", n_especies);
+							}
 						}
 					}
 				}else{
