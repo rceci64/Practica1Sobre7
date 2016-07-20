@@ -313,7 +313,7 @@ void mostraEstadistiques(especie *e, int n_especies){
 	}
 }
 
-int comprovarHabSec(char *entrada, especie especies_zoo){
+int comprovarHabSec(char *entrada, especie especies_zoo[MAX_ESPECIES]){
 	int i = 0, j = 0, hab = 0, ok = 1;
 	char cosa, seccio;
 	char enter[10];
